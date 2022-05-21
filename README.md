@@ -1,5 +1,22 @@
-# Talan
-- PHP 8 (Laravel 8)
+# Talan online test task
+## ЦЕЛЬ
+  Необходимо реализовать справочник пользователей с возможностью хранения данных в
+  разных источниках (БД, кэш, json-файл, xlsx-файл), чтобы данные мог вносить только
+  авторизованный пользователь.
+  Нужно реализовать публичный api для выполнения этих операций.
+
+### ЧТО НУЖНО СДЕЛАТЬ
+Реализовать API или часть API на языке PHP для:
+- сохранения записей в указанный источник данных (только для авторизованного пользователя)
+- получения всех записей из указанного источника данных. Допускается использовать любой фреймворк, любую БД (предпочтительнее MySQL), кэш.
+
+Данные пользователя для хранения:
+- ФИО (уникальное значение)
+- e-mail
+- телефон
+
+## Local env
+- PHP 8 (Laravel 9)
 - Mysql 5.7
 - Redis 6
 - Nginx
@@ -11,10 +28,7 @@
 
 ## Local install
 1. git clone project
-2. cd project
-2. run ```make install-local``` (preferably) or ```install-local-without-compose```
-3. run ```docker exec app php artisan migrate```
-
-## Follow-up launch
-1. cd project dir
-2. ```docker-compose up -d```
+2. cd project dir
+3. ```docker-compose build --no-cache```
+4. ```docker-compose up -d```
+5. ```docker exec app php artisan migrate```
