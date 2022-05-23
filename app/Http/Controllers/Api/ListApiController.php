@@ -10,7 +10,6 @@ use App\Http\Resources\ListResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\XlsxFileRequest;
 use App\Http\Resources\ListsCollection;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ListApiController extends Controller
