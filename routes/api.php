@@ -38,4 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //todo вынести роуты list в отдельный файл
     Route::post('/store_user_to_db', [ListApiController::class, 'storeUserToDb'])
         ->name('store_user_to_db');
+
+    Route::get('/get_users_list_from_db', [ListApiController::class, 'getUsersListFromDb'])
+        ->name('get_users_list_from_db');
 });
