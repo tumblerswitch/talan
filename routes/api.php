@@ -35,10 +35,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthApiController::class, 'logout'])
         ->name('logout');
 
+    //todo нужны роуты и функционал delete, update
     //todo вынести роуты list в отдельный файл
     Route::post('/store_user_to_db', [ListApiController::class, 'storeUserToDb'])
         ->name('store_user_to_db');
 
     Route::get('/get_users_list_from_db', [ListApiController::class, 'getUsersListFromDb'])
         ->name('get_users_list_from_db');
+
+    //todo обьеденить роуты передавая место хранения с помощью параметров
+    Route::post('/import_users_from_xlsx_file', [ListApiController::class, 'importUsersFromXlsxFile'])
+        ->name('import_users_from_xlsx_file');
+
+    Route::get('/export_users_from_xlsx_file', [ListApiController::class, 'exportUsersFromXlsxFile'])
+        ->name('export_users_from_xlsx_file');
 });
