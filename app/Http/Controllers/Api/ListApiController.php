@@ -8,6 +8,7 @@ use App\Services\ListService;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\ListResource;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\XlsxFileRequest;
 use App\Http\Resources\ListsCollection;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -21,11 +22,36 @@ class ListApiController extends Controller
         $this->listService = $listService;
     }
 
-    public function storeUserToDb(ListRequest $request): ListResource
+    public function storeUser(ListRequest $request): ListResource
     {
         $user = $this->listService->addUserToDb($request->validated());
 
+        Redis::set('users_list.' . $user->id, $user);
+
         return new ListResource($user);
+    }
+
+    public function getUsersListFromCache(): ListsCollection
+    {
+        $users_keys = Redis::keys('users_list.*');
+
+        if (empty($users_keys)) {
+            $users = $this->listService->getAllUsers();
+
+            foreach ($users as $user) {
+                Redis::set('users_list.' . $user->id, $user);
+            }
+
+            return new ListsCollection($users);
+        }
+
+        $users = [];
+
+        foreach ($users_keys as $key) {
+            $users[] = json_decode(Redis::get($key));
+        }
+
+        return new ListsCollection($users);
     }
 
     public function getUsersListFromDb(): ListsCollection
